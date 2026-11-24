@@ -1,5 +1,4 @@
-## ReadMe.md
-### PolyMorph — Comprehensive Project Documentation
+## PolyMorph — Comprehensive Project Documentation
 
 **Research Title:** Polyglot File Attacks: Automated Detection of Format-Ambiguous Payloads and Real-World Exploitation Demonstration  
 **Author:** Abhineet Agrawal  
