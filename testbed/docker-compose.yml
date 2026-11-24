@@ -1,0 +1,109 @@
+# PolyMorph Testbed — Full Stack Orchestration
+# INTENTIONALLY VULNERABLE — LOCAL RESEARCH LAB ONLY
+#
+# Starts all 3 testbed tiers:
+#   Tier 1 (Legacy PHP):      http://localhost:8081
+#   Tier 2 (MERN frontend):   http://localhost:3000
+#   Tier 2 (MERN backend):    http://localhost:3001
+#   Tier 3 (FastAPI):         http://localhost:8000
+#   Tier 3 (MinIO):           http://localhost:9000
+#   Tier 3 (MinIO console):   http://localhost:9001
+#   Tier 3 (Frontend):        http://localhost:8080
+#
+# Usage:
+#   docker compose up                         # Start all tiers
+#   docker compose up tier1-php               # Start specific tier only
+#   docker compose up tier2-backend tier2-frontend
+#   docker compose up minio minio-init tier3-api tier3-frontend
+#   docker compose down -v                    # Stop and clean up volumes
+
+services:
+
+  # ── Tier 1: Legacy LAMP/PHP ───────────────────────────────────────────────
+  tier1-php:
+    build: ./tier1_legacy/backend
+    container_name: polymorph-tier1-php
+    ports:
+      - "8081:80"
+    volumes:
+      - ./tier1_legacy/backend:/var/www/html
+    labels:
+      - "polymorph.tier=1"
+      - "polymorph.stack=legacy-php"
+
+  # ── Tier 2: MERN ──────────────────────────────────────────────────────────
+  tier2-backend:
+    build: ./tier2_mern/backend
+    container_name: polymorph-tier2-api
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./tier2_mern/backend:/app
+      - /app/node_modules
+    labels:
+      - "polymorph.tier=2"
+      - "polymorph.stack=mern-backend"
+
+  tier2-frontend:
+    # Built from local Dockerfile — avoids nginx:alpine DockerHub pull
+    build: ./tier2_mern/frontend
+    container_name: polymorph-tier2-web
+    ports:
+      - "3000:80"
+    volumes:
+      - ./tier2_mern/frontend:/usr/share/nginx/html:ro
+    labels:
+      - "polymorph.tier=2"
+      - "polymorph.stack=mern-frontend"
+
+  # ── Tier 3: Cloud-Native (MinIO + FastAPI) ────────────────────────────────
+  minio:
+    build: ./tier3_cloud/minio
+    container_name: polymorph-minio
+    ports:
+      - "9000:9000"
+    volumes:
+      - minio_data:/data
+    labels:
+      - "polymorph.tier=3"
+      - "polymorph.stack=minio"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:9000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Bucket init is handled by tier3-api startup event — no minio/mc image needed
+
+  tier3-api:
+    build: ./tier3_cloud/backend
+    container_name: polymorph-tier3-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./tier3_cloud/backend:/app
+    depends_on:
+      minio:
+        condition: service_healthy
+    environment:
+      MINIO_ENDPOINT: http://minio:9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    labels:
+      - "polymorph.tier=3"
+      - "polymorph.stack=fastapi"
+
+  tier3-frontend:
+    # Built from local Dockerfile — avoids nginx:alpine DockerHub pull
+    build: ./tier3_cloud/frontend
+    container_name: polymorph-tier3-web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./tier3_cloud/frontend:/usr/share/nginx/html:ro
+    labels:
+      - "polymorph.tier=3"
+      - "polymorph.stack=cloud-frontend"
+
+volumes:
+  minio_data:

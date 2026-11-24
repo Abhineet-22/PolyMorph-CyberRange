@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tier 3 Cloud-Native — PolyMorph Lab</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-dark: #0d1117;
+      --card-bg: #161b22;
+      --header-bg: #21262d;
+      --border-color: #30363d;
+      --text-main: #f0f6fc;
+      --text-sub: #8b949e;
+      --accent-blue: #58a6ff;
+      --accent-red: #da3633;
+      --accent-green: #238636;
+      --accent-purple: #8957e5;
+      --accent-gold: #d29922;
+    }
+    body { background: var(--bg-dark); color: var(--text-main); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .card { background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); }
+    .card-header { background: var(--header-bg); border-bottom: 1px solid var(--border-color); color: var(--text-main); font-weight: 600; font-size: 0.95rem; }
+    .form-control, .form-select { background: #0d1117 !important; border-color: var(--border-color) !important; color: var(--text-main) !important; }
+    .form-control:focus, .form-select:focus { border-color: var(--accent-blue) !important; box-shadow: 0 0 0 0.2rem rgba(88,166,255,0.2) !important; }
+    .form-control::placeholder { color: #6e7681 !important; opacity: 1; }
+    label, .form-label { color: var(--text-main); font-weight: 500; font-size: 0.9rem; }
+    .text-muted, .form-text, small { color: var(--text-sub) !important; }
+    .badge-vuln { background: var(--accent-red); font-size: 0.72rem; vertical-align: middle; font-weight: 700; }
+    pre { background: #090d13; border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; font-size: 0.8rem; color: #79c0ff; white-space: pre-wrap; word-break: break-all; }
+    .disclaimer-bar { background: var(--accent-red); color: #fff; font-weight: 700; text-align: center; padding: 10px; letter-spacing: 0.03em; font-size: 0.95rem; }
+    .avatar-wrap { width: 80px; height: 80px; border-radius: 50%; overflow: hidden; background: #21262d; border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center; }
+    .file-thumb { width: 64px; height: 64px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-color); background: #21262d; }
+    .mode-info { border-left: 4px solid var(--accent-blue); padding: 8px 14px; background: #161b22; border-radius: 0 6px 6px 0; font-size: 0.85rem; color: var(--text-main); }
+    .mode-info.bypass { border-left-color: var(--accent-red); background: rgba(218, 54, 51, 0.08); }
+    .vuln-tag { display: inline-block; background: var(--accent-red); color: #fff; font-size: 0.68rem; font-weight: 700; padding: 1px 6px; border-radius: 4px; vertical-align: middle; margin-left: 4px; }
+    .file-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border-color); }
+    .file-item:last-child { border-bottom: none; }
+    .status-pill { font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; font-weight: 600; }
+    .status-pass { background: rgba(35, 134, 54, 0.2); color: #3fb950; border: 1px solid rgba(35, 134, 54, 0.4); }
+    .status-bypass { background: rgba(218, 54, 51, 0.2); color: #f85149; border: 1px solid rgba(218, 54, 51, 0.4); }
+  </style>
+</head>
+<body>
+  <!-- Disclaimer Bar -->
+  <div class="disclaimer-bar">
+    ⚠️ INTENTIONALLY VULNERABLE LAB — LOCAL RESEARCH ONLY &nbsp;|&nbsp; PolyMorph Tier 3 Cloud-Native Testbed
+  </div>
+
+  <div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <div class="avatar-wrap" id="avatar-preview">
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" fill="#58a6ff" viewBox="0 0 16 16">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+        </svg>
+      </div>
+      <div>
+        <h4 class="mb-0 text-white">researcher_demo <span class="badge bg-secondary">@cloud-lab</span></h4>
+        <small class="text-muted">PolyMorph Security Evaluation — S3 Object Storage + FastAPI Differential</small>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- ===== LEFT COLUMN: Upload & Validation ===== -->
+      <div class="col-lg-6 d-flex flex-column gap-3">
+        
+        <!-- Upload Card -->
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <span>🗂️ S3 Object Ingestion / Upload</span>
+            <span class="badge badge-vuln text-white">VULNERABLE</span>
+          </div>
+          <div class="card-body">
+            <!-- Mode selector -->
+            <div class="mb-3">
+              <label class="form-label text-warning fw-bold">Upload Architecture Mode</label>
+              <div class="d-flex gap-3 mb-2">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="uploadMode" id="modeServer" value="server" />
+                  <label class="form-check-label text-white" for="modeServer">Server-Mediated</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="uploadMode" id="modePresigned" value="presigned" checked />
+                  <label class="form-check-label text-white" for="modePresigned">
+                    Pre-signed URL (Direct S3) <span class="vuln-tag">BYPASS</span>
+                  </label>
+                </div>
+              </div>
+
+              <div id="mode-info-server" class="mode-info" style="display:none;">
+                <strong>Server-Mediated mode:</strong> Client uploads to the backend. Content inspection filters can be applied before saving.
+              </div>
+              <div id="mode-info-presigned" class="mode-info bypass">
+                <strong>⚠️ Pre-signed URL mode bypasses backend validation:</strong> The server issues a signed S3 PUT token; the browser uploads <em>directly</em> to the MinIO bucket at <code>:9000</code>. No server middleware ever touches or validates the uploaded file.
+              </div>
+            </div>
+
+            <!-- File input -->
+            <div class="mb-3">
+              <label for="fileInput" class="form-label">Select File to Upload</label>
+              <input class="form-control" type="file" id="fileInput" />
+              <div class="form-text">Choose a synthesized polyglot (e.g. <code>tier3_zipslip.png</code>) or an image/payload.</div>
+            </div>
+
+            <!-- Content-Type override (visible in presigned mode) -->
+            <div class="mb-3" id="ct-override-wrap">
+              <label for="ctInput" class="form-label">
+                Content-Type Override <span class="vuln-tag">USER-CONTROLLED</span>
+              </label>
+              <input class="form-control" type="text" id="ctInput" value="image/png" placeholder="e.g. image/png, application/zip, text/html" />
+              <div class="form-text">Client decides the Content-Type; MinIO stores and serves this metadata directly.</div>
+            </div>
+
+            <button class="btn btn-primary w-100 fw-bold" id="uploadBtn" onclick="handleUpload()">🚀 Upload Object</button>
+
+            <!-- Upload Progress -->
+            <div class="progress mt-3" style="height:6px; display:none;" id="progress-wrap">
+              <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" style="width:100%"></div>
+            </div>
+
+            <!-- Upload Result Alert -->
+            <div id="result-box" class="mt-3" style="display:none;">
+              <div class="alert alert-success py-2 px-3 mb-2" id="result-msg"></div>
+              <div id="img-preview-wrap" style="display:none;">
+                <small class="d-block text-muted mb-1">Served from S3 without <code>nosniff</code>:</small>
+                <img id="img-preview" src="" alt="uploaded" class="rounded mb-2" style="max-width:100%; max-height:160px; border:1px solid #30363d;" />
+              </div>
+              <div class="d-flex gap-2">
+                <a id="file-link" href="#" target="_blank" class="btn btn-sm btn-outline-info">↗ Open in Browser</a>
+                <button class="btn btn-sm btn-warning fw-bold" onclick="validateUploaded()">🔬 Validate This File</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dedicated Parser Differential Validation Card (ALWAYS VISIBLE) -->
+        <div class="card" style="border: 1px solid #8957e5;">
+          <div class="card-header d-flex justify-content-between align-items-center" style="background:#1f182c; color:#d2a8ff;">
+            <span>🔬 Dual-Consumer Parser Differential Validator</span>
+            <span class="badge" style="background:#8957e5; color:#fff;">Sink Trigger</span>
+          </div>
+          <div class="card-body">
+            <p class="small text-muted mb-3">
+              Executes <code>POST /validate-upload</code>: The backend fetches the file from S3 and tests it against two competing parsers: <strong>python-magic</strong> (header inspection) vs <strong>zipfile</strong> (trailer EOCD parsing).
+            </p>
+
+            <div class="input-group mb-3">
+              <span class="input-group-text" style="background:#21262d; border-color:#30363d; color:#c9d1d9;">Target File</span>
+              <input type="text" class="form-control" id="valTargetInput" placeholder="filename in bucket (e.g. tier3_zipslip.png)" />
+              <button class="btn btn-warning fw-bold px-3" onclick="triggerManualValidation()">Run Validation</button>
+            </div>
+
+            <!-- Validation Result Display -->
+            <div id="validate-result-box" style="display:none;">
+              <div class="p-3 rounded mb-3" style="background:#090d13; border:1px solid #30363d;">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="fw-bold" id="val-file-name" style="color:#58a6ff;"></span>
+                  <span id="val-differential-badge"></span>
+                </div>
+                <div class="row g-2 small">
+                  <div class="col-6">
+                    <span class="text-muted d-block">python-magic (Consumer 1):</span>
+                    <span id="val-magic-status" class="fw-bold"></span>
+                  </div>
+                  <div class="col-6">
+                    <span class="text-muted d-block">zipfile (Consumer 2):</span>
+                    <span id="val-zip-status" class="fw-bold"></span>
+                  </div>
+                </div>
+                <div class="mt-2 pt-2 border-top border-secondary" id="val-gap-wrap" style="display:none;">
+                  <span class="text-danger fw-bold small d-block">Differential Gap Discovered:</span>
+                  <span id="val-gap-text" class="text-warning small"></span>
+                </div>
+              </div>
+              <small class="text-muted d-block mb-1">Raw Backend Response:</small>
+              <pre id="validate-json" class="mb-0"></pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===== RIGHT COLUMN: Vectors, Bucket Objects & Worker Monitor ===== -->
+      <div class="col-lg-6 d-flex flex-column gap-3">
+
+        <!-- Attack Vectors Card -->
+        <div class="card">
+          <div class="card-header">⚔️ Attack Vectors in This Lab</div>
+          <div class="card-body small">
+            <div class="mb-3">
+              <strong class="text-danger">1. Pre-signed URL Upload Bypass</strong>
+              <p class="text-muted mb-0">Direct client-to-storage PUT allows uploading unauthorized payloads without passing through application middleware.</p>
+            </div>
+            <div class="mb-3">
+              <strong class="text-danger">2. Parser Differential → Background Archive Extraction</strong>
+              <p class="text-muted mb-0"><code>python-magic</code> validates image header (passes upload filter); background worker invokes <code>zipfile</code> to unpack payload (executes Zip-Slip / parser mismatch).</p>
+            </div>
+            <div>
+              <strong class="text-danger">3. Public Storage MIME Confusion</strong>
+              <p class="text-muted mb-0">Objects served directly from S3 lack <code>X-Content-Type-Options: nosniff</code> and <code>Content-Disposition: attachment</code>, allowing polyglot script execution in browsers.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bucket Files Card -->
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <span>📦 S3 Bucket Objects (<code>uploads</code>)</span>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-outline-danger" onclick="clearAll()">🧹 Clear All</button>
+              <button class="btn btn-sm btn-outline-secondary" onclick="loadFiles()">Refresh</button>
+            </div>
+          </div>
+          <div class="card-body" style="max-height:240px; overflow-y:auto;">
+            <div id="files-list">
+              <p class="text-muted small">Loading bucket contents…</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Worker Extraction Monitor Card -->
+        <div class="card" style="border: 1px solid #8957e5;">
+          <div class="card-header d-flex justify-content-between align-items-center" style="background:#1b1528; color:#d2a8ff;">
+            <span>⚙️ Background Worker Monitor</span>
+            <span class="badge bg-danger" id="worker-badge">LIVE POLLING</span>
+          </div>
+          <div class="card-body" style="max-height:220px; overflow-y:auto;">
+            <p class="small text-muted mb-2">Unpacked files in <code>/tmp/polymorph_extracted</code> inside backend:</p>
+            <div id="extracted-list">
+              <p class="text-muted small">No extracted files yet. Validate a PNG+ZIP to trigger extraction.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const API = "http://localhost:8000";
+    const MINIO = "http://localhost:9000";
+    let lastUploadedFilename = null;
+
+    // Toggle mode info panels
+    document.querySelectorAll('input[name="uploadMode"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        const mode = document.querySelector('input[name="uploadMode"]:checked').value;
+        document.getElementById('mode-info-server').style.display    = mode === 'server'    ? '' : 'none';
+        document.getElementById('mode-info-presigned').style.display = mode === 'presigned' ? '' : 'none';
+        document.getElementById('ct-override-wrap').style.display    = mode === 'presigned' ? '' : 'none';
+      });
+    });
+
+    async function handleUpload() {
+      const file = document.getElementById('fileInput').files[0];
+      if (!file) { alert('Please select a file first.'); return; }
+
+      const mode = document.querySelector('input[name="uploadMode"]:checked').value;
+      setLoading(true);
+
+      try {
+        if (mode === 'presigned') {
+          await uploadPresigned(file);
+        } else {
+          await uploadServer(file);
+        }
+      } catch(e) {
+        alert('Upload error: ' + e.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    async function uploadPresigned(file) {
+      const contentType = document.getElementById('ctInput').value || 'image/png';
+      // Step 1: get pre-signed URL from API
+      const res = await fetch(`${API}/get-upload-url?filename=${encodeURIComponent(file.name)}&content_type=${encodeURIComponent(contentType)}`);
+      if (!res.ok) throw new Error(await res.text());
+      const { upload_url, filename } = await res.json();
+
+      // Step 2: PUT directly to MinIO — bypasses all server-side validation
+      let putUrl = upload_url;
+      if (putUrl.includes('minio:9000')) {
+        putUrl = putUrl.replace('http://minio:9000', MINIO);
+      }
+      const putRes = await fetch(putUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': contentType },
+        body: file,
+      });
+      if (!putRes.ok) throw new Error(`MinIO PUT failed: ${putRes.status}`);
+
+      lastUploadedFilename = filename;
+      document.getElementById('valTargetInput').value = filename;
+      showResult(filename, `✅ Pre-signed bypass successful! File sent directly to MinIO bucket.`);
+      loadFiles();
+    }
+
+    async function uploadServer(file) {
+      const res = await fetch(`${API}/get-upload-url?filename=${encodeURIComponent(file.name)}&content_type=${encodeURIComponent(file.type || 'application/octet-stream')}`);
+      if (!res.ok) throw new Error(await res.text());
+      const { upload_url, filename } = await res.json();
+
+      let putUrl = upload_url;
+      if (putUrl.includes('minio:9000')) {
+        putUrl = putUrl.replace('http://minio:9000', MINIO);
+      }
+      const putRes = await fetch(putUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type || 'application/octet-stream' },
+        body: file,
+      });
+      if (!putRes.ok) throw new Error(`Upload failed: ${putRes.status}`);
+
+      lastUploadedFilename = filename;
+      document.getElementById('valTargetInput').value = filename;
+      showResult(filename, `✅ Upload complete via server flow.`);
+      loadFiles();
+    }
+
+    function showResult(filename, msg) {
+      const publicUrl = `${MINIO}/uploads/${encodeURIComponent(filename)}`;
+      document.getElementById('result-msg').textContent = msg;
+      document.getElementById('file-link').href = publicUrl;
+
+      const imgWrap = document.getElementById('img-preview-wrap');
+      const img = document.getElementById('img-preview');
+      img.src = publicUrl;
+      imgWrap.style.display = '';
+
+      document.getElementById('result-box').style.display = '';
+    }
+
+    function validateUploaded() {
+      if (lastUploadedFilename) {
+        validateFile(lastUploadedFilename);
+      }
+    }
+
+    function triggerManualValidation() {
+      const fn = document.getElementById('valTargetInput').value.trim();
+      if (!fn) { alert('Enter or select a filename in the bucket to validate.'); return; }
+      validateFile(fn);
+    }
+
+    async function validateFile(filename) {
+      document.getElementById('valTargetInput').value = filename;
+      try {
+        const res = await fetch(`${API}/validate-upload?filename=${encodeURIComponent(filename)}`, { method: 'POST' });
+        const json = await res.json();
+        
+        // Populate structured validation UI
+        document.getElementById('val-file-name').textContent = json.filename || filename;
+        
+        const badge = document.getElementById('val-differential-badge');
+        if (json.zip_detected && json.magic_pass) {
+          badge.className = 'status-pill status-bypass';
+          badge.textContent = 'DIFFERENTIAL BYPASS CONFIRMED';
+        } else if (json.zip_detected) {
+          badge.className = 'status-pill status-bypass';
+          badge.textContent = 'ZIP ARCHIVE PARSED';
+        } else {
+          badge.className = 'status-pill status-pass';
+          badge.textContent = 'STANDARD OBJECT';
+        }
+
+        document.getElementById('val-magic-status').textContent = `${json.magic_mime || 'unknown'} (${json.magic_pass ? 'Passed Image Check' : 'Failed'})`;
+        document.getElementById('val-magic-status').className = json.magic_pass ? 'text-success fw-bold' : 'text-danger fw-bold';
+
+        document.getElementById('val-zip-status').textContent = json.zip_detected ? `Valid ZIP (${(json.zip_entries || []).join(', ')})` : 'Not a ZIP';
+        document.getElementById('val-zip-status').className = json.zip_detected ? 'text-warning fw-bold' : 'text-muted fw-bold';
+
+        if (json.differential_gap) {
+          document.getElementById('val-gap-wrap').style.display = '';
+          document.getElementById('val-gap-text').textContent = json.differential_gap;
+        } else {
+          document.getElementById('val-gap-wrap').style.display = 'none';
+        }
+
+        document.getElementById('validate-json').textContent = JSON.stringify(json, null, 2);
+        document.getElementById('validate-result-box').style.display = '';
+        pollExtracted();
+      } catch(e) {
+        alert('Validation error: ' + e.message);
+      }
+    }
+
+    async function loadFiles() {
+      const list = document.getElementById('files-list');
+      try {
+        const res = await fetch(`${API}/files`);
+        const files = await res.json();
+        if (!files.length) {
+          list.innerHTML = '<p class="text-muted small">No objects in bucket. Upload a file above.</p>';
+          return;
+        }
+        list.innerHTML = files.map(f => `
+          <div class="file-item">
+            <img src="${f.url}" alt="${f.key}" class="file-thumb" onerror="this.style.display='none'" />
+            <div class="overflow-hidden flex-grow-1">
+              <div class="text-truncate fw-bold"><a href="${f.url}" target="_blank" style="color:#58a6ff;">${f.key}</a></div>
+              <small class="text-muted d-block">${(f.size/1024).toFixed(1)} KB · direct S3 link</small>
+              <div class="d-flex gap-2 mt-1">
+                <button class="btn btn-sm btn-outline-warning py-0 px-2" style="font-size:0.75rem;" onclick="validateFile('${f.key}')">🔬 Validate</button>
+                <a href="${f.url}" target="_blank" class="btn btn-sm btn-outline-info py-0 px-2" style="font-size:0.75rem;">↗ Open</a>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        // If validation target input is empty, default to the latest file
+        if (!document.getElementById('valTargetInput').value && files.length > 0) {
+          document.getElementById('valTargetInput').value = files[files.length - 1].key;
+        }
+      } catch(e) {
+        list.innerHTML = `<p class="text-danger small">Error loading files: ${e.message}</p>`;
+      }
+    }
+
+    async function clearAll() {
+      if (!confirm('Clear all uploaded files in S3 and worker extracted outputs?')) return;
+      try {
+        const res = await fetch(`${API}/clear`, { method: 'POST' });
+        const data = await res.json();
+        alert(`Cleared: ${data.cleared.s3_objects} S3 objects, ${data.cleared.extracted_files} extracted files.`);
+        document.getElementById('result-box').style.display = 'none';
+        document.getElementById('validate-result-box').style.display = 'none';
+        document.getElementById('valTargetInput').value = '';
+        loadFiles();
+        pollExtracted();
+      } catch(e) {
+        alert('Clear failed: ' + e.message);
+      }
+    }
+
+    async function pollExtracted() {
+      const list = document.getElementById('extracted-list');
+      try {
+        const res = await fetch(`${API}/extracted`);
+        const data = await res.json();
+        if (!data.files || data.files.length === 0) {
+          list.innerHTML = '<p class="text-muted small">No extracted files yet. Validate a PNG+ZIP to trigger extraction.</p>';
+          return;
+        }
+        list.innerHTML = data.files.map(f => `
+          <div class="p-2 mb-2 rounded" style="background:#21262d; border:1px solid #30363d;">
+            <div class="d-flex justify-content-between align-items-center">
+              <strong class="text-warning small">${f.name}</strong>
+              <span class="badge bg-danger" style="font-size:0.7rem;">${f.size} B</span>
+            </div>
+            ${f.preview ? `<pre class="mt-1 mb-0 p-1 text-info small" style="background:#0d1117;">${f.preview}</pre>` : ''}
+          </div>
+        `).join('');
+      } catch(e) {
+        // backend loading
+      }
+    }
+
+    // Auto-poll extracted files every 3s and load on init
+    setInterval(pollExtracted, 3000);
+    loadFiles();
+    pollExtracted();
+
+    function setLoading(on) {
+      document.getElementById('progress-wrap').style.display = on ? '' : 'none';
+      document.getElementById('uploadBtn').disabled = on;
+    }
+  </script>
+</body>
+</html>

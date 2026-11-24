@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PolyMorph - Comprehensive Project Guide and Roadmap</title>
+  <script src="file:///d:/Sem%20Docs/sem%207%20docs/Project/testbed/scratch/mermaid.min.js"></script>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 16mm 14mm 16mm 14mm;
+      @bottom-right {
+        content: counter(page);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        font-size: 8pt;
+        color: #64748b;
+      }
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-size: 9.5pt;
+      line-height: 1.5;
+      color: #0f172a;
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      font-size: 18pt;
+      font-weight: 800;
+      color: #0f172a;
+      border-bottom: 2.5px solid #2563eb;
+      padding-bottom: 5px;
+      margin-top: 0;
+      margin-bottom: 8px;
+      page-break-after: avoid;
+    }
+    h2 {
+      font-size: 13pt;
+      font-weight: 700;
+      color: #1e3a8a;
+      border-bottom: 1px solid #cbd5e1;
+      padding-bottom: 4px;
+      margin-top: 18px;
+      margin-bottom: 8px;
+      page-break-after: avoid;
+    }
+    h3 {
+      font-size: 10.5pt;
+      font-weight: 600;
+      color: #1e293b;
+      margin-top: 14px;
+      margin-bottom: 6px;
+      page-break-after: avoid;
+    }
+    p {
+      margin-top: 0;
+      margin-bottom: 8px;
+      text-align: justify;
+    }
+    strong {
+      color: #0f172a;
+      font-weight: 600;
+    }
+    hr {
+      border: 0;
+      height: 1px;
+      background: #e2e8f0;
+      margin: 14px 0;
+    }
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 14px 0;
+      font-size: 8.5pt;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+      text-align: left;
+      padding: 6px 8px;
+      border: 1px solid #cbd5e1;
+    }
+    td {
+      padding: 5px 8px;
+      border: 1px solid #cbd5e1;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+    /* Code and math */
+    code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 8.2pt;
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 1px 4px;
+      border-radius: 3px;
+      border: 1px solid #e2e8f0;
+    }
+    pre:not(.mermaid) {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 8px 10px;
+      border-radius: 5px;
+      font-size: 7.8pt;
+      overflow-x: auto;
+      page-break-inside: avoid;
+      break-inside: avoid;
+      margin: 8px 0;
+    }
+    pre:not(.mermaid) code {
+      background: transparent;
+      color: inherit;
+      border: 0;
+      padding: 0;
+    }
+    /* Mermaid diagram container */
+    .mermaid-wrap {
+      display: block;
+      text-align: center;
+      margin: 12px 0;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .mermaid {
+      display: inline-block;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 10px;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+    .mermaid svg {
+      display: block;
+      margin: 0 auto;
+      max-width: 100% !important;
+      max-height: 185mm !important;
+      height: auto !important;
+      width: auto !important;
+    }
+    /* Blockquotes */
+    blockquote {
+      margin: 8px 0;
+      padding: 6px 12px;
+      background: #f8fafc;
+      border-left: 3.5px solid #3b82f6;
+      color: #334155;
+      font-style: italic;
+      page-break-inside: avoid;
+    }
+    ul, ol {
+      margin-top: 0;
+      margin-bottom: 8px;
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>PolyMorph: Format Behavior Analysis, Polyglot Synthesis &amp; Security Evaluation Framework</h1>
+<h2>Comprehensive Project Guide &amp; Research Roadmap (IMRaD Specification)</h2>
+<p><strong>Institution:</strong> School of Cyber Security &amp; Digital Forensics, National Forensic Sciences University (NFSU), Gandhinagar<br />
+<strong>Academic Context:</strong> Master's Capstone Defense &amp; Technical Guide<br />
+<strong>Project Repository:</strong> <code>d:\Sem Docs\sem 7 docs\Project\PolyMorph</code></p>
+<hr />
+<h2>Executive Summary &amp; System Overview</h2>
+<p>PolyMorph is an offensive and defensive security framework designed to study, synthesize, evaluate, and mitigate <strong>file format parsing differentials</strong> and <strong>polyglot files</strong>. Modern cloud, web, and enterprise architectures process files across heterogeneous components (perimeter WAFs, content filters, backend microservices, background asynchronous workers, and client browsers). </p>
+<p>Because each layer uses independent, divergent parsing implementations, a single byte stream can be simultaneously validated as benign media by a perimeter guard, executed as server-side code by a runtime, unpacked as an archive by an asynchronous worker, and interpreted as script by a browser.</p>
+<div class="mermaid-wrap"><pre class="mermaid">
+flowchart TD
+    subgraph PERIMETER["1. Perimeter Ingestion & Recon"]
+        A["Target Host / Endpoint"] --> B["Passive Recon Scanner<br/>(target_scanner.py)"]
+        B --> C["Evidence Corpus<br/>(Headers, HTML, Endpoints, Gaps)"]
+        C --> D["Strategy Recommender<br/>(Evidence-to-Polyglot Mapping)"]
+    end
+
+    subgraph ENGINE["2. Core PolyMorph Synthesis Engine"]
+        D --> E["Format Registry<br/>(9 Format Contracts)"]
+        E --> F{"Strategy Selection Engine"}
+        F -->|"Slack Space / EOCD"| G["APPEND Strategy<br/>(Offset Patching)"]
+        F -->|"TLV Chunk / Comment"| H["INJECT Strategy<br/>(Metadata Encapsulation)"]
+        G --> I["Dual Format Validation<br/>(Pillow, PyPDF, zipfile)"]
+        H --> I
+    end
+
+    subgraph TESTBED["3. Controlled Evaluation Testbed"]
+        I --> J["Testbed Harness<br/>(run_tests.py)"]
+        J --> K["Tier 1: LAMP Stack<br/>(LFI to RCE)"]
+        J --> L["Tier 2: MERN Stack<br/>(MIME Promotion XSS & Zip-Slip)"]
+        J --> M["Tier 3: Cloud-Native S3<br/>(Pre-signed URL Bypass & Worker Differential)"]
+    end
+
+    subgraph DEFENSE["4. Defense & Forensics (Phase 3 & 5)"]
+        I -.-> N["Structural Anomaly Detector<br/>(Slack & Multi-Magic Detection)"]
+        I -.-> O["In-Memory Re-Rasterization<br/>(Normalizing Sanitizer)"]
+        N --> P["PolyMorph Studio Cyber Range<br/>(Integrated Web Interface)"]
+        O --> P
+    end
+
+    style PERIMETER fill:#1f2937,stroke:#3b82f6,color:#fff
+    style ENGINE fill:#111827,stroke:#8b5cf6,color:#fff
+    style TESTBED fill:#18181b,stroke:#ef4444,color:#fff
+    style DEFENSE fill:#0f172a,stroke:#10b981,color:#fff
+</pre></div>
+
+<hr />
+<h2>1. Introduction (I)</h2>
+<h3>1.1 Genesis &amp; The Core Idea</h3>
+<p>File upload mechanisms are traditionally evaluated on perimeter heuristics:
+1. <strong>File Extension Verification</strong> (e.g., checking if <code>.png</code> is at the end of a string).
+2. <strong>Magic Byte Sniffing</strong> (e.g., inspecting if the first 4 bytes match <code>\x89PNG</code> or <code>\xFF\xD8\xFF</code>).</p>
+<p>These heuristics rest on a fundamentally flawed premise: <strong>that a file belongs to exactly one format</strong>. </p>
+<p>In computing theory, file format specifications (RFCs, ISO, Adobe, PKWARE standards) are written independently. Some formats read sequentially from byte 0 (JPEG, PNG). Others read from the end of the file backward (ZIP Central Directory). Others permit arbitrary binary padding before delimiters (PDF, HTML). </p>
+<p>A <strong>polyglot file</strong> is a valid sequence of bytes that satisfies the structural syntax of two or more distinct file format specifications simultaneously without corruption.</p>
+<h3>1.2 The Problem Statement</h3>
+<p>In distributed software stacks, a file is never processed by a single entity. It passes through an <strong>Asymmetric Parsing Pipeline</strong>:</p>
+<div class="mermaid-wrap"><pre class="mermaid">
+flowchart LR
+    File["Polyglot Payload<br/>(e.g., PNG + ZIP)"] --> WAF["Perimeter Filter<br/>(libmagic / file-type)"]
+    WAF -->|"Passes as PNG"| S3["Storage Layer<br/>(Local Disk / S3)"]
+    S3 --> Worker["Worker Pipeline<br/>(adm-zip / zipfile)"]
+    S3 --> Browser["Client Browser<br/>(MIME Sniffing)"]
+
+    Worker -->|"Executes as Archive"| Pwn1["Zip-Slip Path Traversal"]
+    Browser -->|"Executes as HTML"| Pwn2["Stored Stored XSS"]
+
+    style File fill:#4b5563,stroke:#fff,color:#fff
+    style WAF fill:#15803d,stroke:#fff,color:#fff
+    style Worker fill:#b91c1c,stroke:#fff,color:#fff
+    style Browser fill:#b91c1c,stroke:#fff,color:#fff
+</pre></div>
+
+<p>When Parser A and Parser B disagree on the semantic boundary, internal structure, or true type of a file, a <strong>Parser Differential</strong> vulnerability exists. This leads to:
+* <strong>Perimeter Bypass:</strong> Dangerous files (webshells, archives, HTML scripts) disguise themselves under trusted image signatures.
+* <strong>Remote Code Execution (RCE):</strong> Server-side inclusion (LFI) of image-wrapped code.
+* <strong>Zip-Slip / Path Traversal:</strong> Background extractors unzipping payloads masquerading as pictures.
+* <strong>Stored Client-Side Execution (XSS):</strong> Browsers MIME-sniffing scripts from unsanitized image endpoints.</p>
+<h3>1.3 Research Objectives</h3>
+<ol>
+<li><strong>Formalize Parsing Contracts:</strong> Measure and document the exact byte tolerance (prepend tolerance, append tolerance, comment field limits) of major binary formats.</li>
+<li><strong>Automated Synthesis:</strong> Construct valid polyglots programmatically using automated offset calculation, checksum preservation, and table re-indexing.</li>
+<li><strong>Target-Agnostic Reconnaissance:</strong> Passively inspect target systems to discover exposed endpoints, missing security headers, and recommend viable polyglot vectors.</li>
+<li><strong>Empirical Evaluation:</strong> Test synthesized artifacts against real-world, multi-tier vulnerable testbeds (Legacy LAMP, Modern MERN, Cloud-Native FastAPI/S3).</li>
+<li><strong>Defensive Formalization:</strong> Engineer structural detectors and sanitizers that neutralize polyglots without breaking valid user files.</li>
+</ol>
+<hr />
+<h2>2. Methods &amp; Architectural Approach (M)</h2>
+<h3>2.1 Format Contract Specification</h3>
+<p>PolyMorph defines a rigorous contract (<code>FormatSpec</code>) for every supported format across 13 dimensional attributes:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Format</th>
+<th style="text-align: center;">Extensions</th>
+<th style="text-align: center;">Magic Bytes</th>
+<th style="text-align: center;">Append Tolerant?</th>
+<th style="text-align: center;">Prepend Tolerant?</th>
+<th style="text-align: center;">Max Prepend</th>
+<th style="text-align: center;">Scans From</th>
+<th style="text-align: left;">Primary Injection Carrier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>JPEG</strong></td>
+<td style="text-align: center;"><code>.jpg</code>, <code>.jpeg</code></td>
+<td style="text-align: center;"><code>FF D8 FF</code></td>
+<td style="text-align: center;">Yes (EOF Slack)</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">0 B</td>
+<td style="text-align: center;">Start</td>
+<td style="text-align: left;"><code>COM</code> (<code>0xFFFE</code>) Marker</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>PNG</strong></td>
+<td style="text-align: center;"><code>.png</code></td>
+<td style="text-align: center;"><code>89 50 4E 47</code></td>
+<td style="text-align: center;">Yes (post-<code>IEND</code>)</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">0 B</td>
+<td style="text-align: center;">Start</td>
+<td style="text-align: left;">Ancillary Chunk (<code>tEXt</code>, <code>zTXt</code>)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>GIF</strong></td>
+<td style="text-align: center;"><code>.gif</code></td>
+<td style="text-align: center;"><code>47 49 46 38</code></td>
+<td style="text-align: center;">Yes (post-<code>0x3B</code>)</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">0 B</td>
+<td style="text-align: center;">Start</td>
+<td style="text-align: left;">Comment Extension Block</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>PDF</strong></td>
+<td style="text-align: center;"><code>.pdf</code></td>
+<td style="text-align: center;"><code>25 50 44 46</code></td>
+<td style="text-align: center;">Yes (post-<code>%%EOF</code>)</td>
+<td style="text-align: center;">Yes (Standard lax)</td>
+<td style="text-align: center;">Up to 1024 B</td>
+<td style="text-align: center;">End/Start</td>
+<td style="text-align: left;">PDF Stream / Metadata / Comment</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>ZIP</strong></td>
+<td style="text-align: center;"><code>.zip</code>, <code>.jar</code></td>
+<td style="text-align: center;"><code>50 4B 03 04</code></td>
+<td style="text-align: center;">Yes (EOCD comment)</td>
+<td style="text-align: center;">Yes (Self-Extract)</td>
+<td style="text-align: center;">Unlimited</td>
+<td style="text-align: center;"><strong>End (EOCD)</strong></td>
+<td style="text-align: left;">Central Directory Padding</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>HTML</strong></td>
+<td style="text-align: center;"><code>.html</code>, <code>.htm</code></td>
+<td style="text-align: center;">None (Contextual)</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Unlimited</td>
+<td style="text-align: center;">Start</td>
+<td style="text-align: left;">Any markup comment or script</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>PHP</strong></td>
+<td style="text-align: center;"><code>.php</code></td>
+<td style="text-align: center;">None (<code>&lt;?php</code>)</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Unlimited</td>
+<td style="text-align: center;">Linear Search</td>
+<td style="text-align: left;">Native token parser</td>
+</tr>
+</tbody>
+</table>
+<div class="mermaid-wrap"><pre class="mermaid">
+classDiagram
+    class FormatSpec {
+        +str name
+        +tuple extensions
+        +tuple mime_types
+        +bytes magic_bytes
+        +bool append_tolerant
+        +bool prepend_tolerant
+        +int max_prepend_bytes
+        +bool scans_from_end
+        +bool has_comment_field
+        +int comment_max_bytes
+        +bool has_internal_checksum
+        +str validator
+    }
+
+    class FormatRegistry {
+        +dict _registry
+        +get(name) FormatSpec
+        +describe_pair(fmt_a, fmt_b)
+        +all_names() list
+    }
+
+    FormatRegistry o-- FormatSpec
+</pre></div>
+
+<h3>2.2 Synthesis Mechanics (The Two Core Strategies)</h3>
+<div class="mermaid-wrap"><pre class="mermaid">
+flowchart TD
+    Start["Request Build: Format A (Host) + Format B (Payload)"] --> Check{"Are specs compatible?"}
+    Check -->|No| Reject["Error: Mutually Incompatible Contracts"]
+    Check -->|Yes| Select{"Strategy Selection"}
+
+    Select -->|"Host is Append Tolerant &<br/>Payload can survive Prepend"| StratAppend["Strategy: APPEND"]
+    Select -->|"Host supports encapsulation &<br/>Payload fits within comment budget"| StratInject["Strategy: INJECT"]
+
+    subgraph APPEND_FLOW["Append Mechanics"]
+        StratAppend --> ReadHost["Normalize Host Bytes"]
+        ReadHost --> ReadPayload["Read Payload Bytes"]
+        ReadPayload --> Patch{"Does Payload require<br/>internal offset patching?"}
+        Patch -->|"ZIP Format"| CalcOffset["Locate Central Directory & EOCD<br/>Add len(Host) to every CD record offset"]
+        Patch -->|"Linear Format"| Concat["Direct Concatenation: Host + Payload"]
+        CalcOffset --> Concat
+    end
+
+    subgraph INJECT_FLOW["Inject Mechanics"]
+        StratInject --> NormHost["Locate Header Marker in Host"]
+        NormHost --> Encapsulate["Wrap Payload in Target Segment:<br/>• JPEG: 0xFFFE + len(2B) + payload<br/>• PNG: len(4B) + 'tEXt' + payload + CRC32"]
+        Encapsulate --> Splice["Splice Segment into Host before image raster data"]
+    end
+
+    Concat --> Validate["Dual Format Post-Build Validation"]
+    Splice --> Validate
+    Validate -->|"Pillow + PyPDF + zipfile"| Verdict{"Both Valid?"}
+    Verdict -->|Yes| Success["Emit Verified Dual-Valid Polyglot"]
+    Verdict -->|No| Warn["Emit with Structural Divergence Warning"]
+
+    style APPEND_FLOW fill:#1e1e24,stroke:#3b82f6,color:#fff
+    style INJECT_FLOW fill:#1e1e24,stroke:#8b5cf6,color:#fff
+</pre></div>
+
+<h4>Strategy 1: <code>APPEND</code> (Dual-Parser Divergence)</h4>
+<p>Used primarily when Format A scans from byte 0 and ignores trailing data after an End-of-File marker, while Format B scans backward from the end of the file.
+* <strong>The Prime Pair:</strong> <code>PNG + ZIP</code> or <code>JPEG + ZIP</code>.
+* <strong>The Engineering Challenge:</strong> A raw ZIP file stores internal 32-bit absolute offsets pointing to each file's Local File Header. If a 200-byte PNG is placed in front of a ZIP, all internal ZIP pointers will be misaligned by exactly 200 bytes, causing standard archivers to report archive corruption.
+* <strong>PolyMorph Innovation:</strong> <code>zip_fmt.patch_offsets_and_tail()</code> traverses the Central Directory in memory, increments each <code>relative_offset_of_local_header</code> by <code>len(Host_Bytes)</code>, and recalculates the End of Central Directory (EOCD) record lengths before concatenation.</p>
+<h4>Strategy 2: <code>INJECT</code> (Metadata Encapsulation)</h4>
+<p>Used when Format B (e.g. PHP script, HTML/JS payload) must execute through an interpreter while disguised inside a strictly validated container (JPEG, PNG).
+* <strong>JPEG Injection:</strong> Inserts payload into an application or comment marker (<code>0xFFFE</code>). JPEG decoders read the marker length, skip over the payload, and render the image pixels without defect.
+* <strong>PNG Injection:</strong> Inserts payload into a newly minted ancillary chunk (<code>tEXtComment\0</code>). The 4-byte CRC32 is dynamically computed over the chunk type and payload so strict decoders do not reject the chunk.</p>
+<hr />
+<h3>2.3 Passive Reconnaissance Engine (<code>TargetScanner</code>)</h3>
+<p>The reconnaissance module operates on an evidence-based inference model with <strong>zero hardcoded assumptions</strong> about the target technology stack.</p>
+<div class="mermaid-wrap"><pre class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Operator as PolyMorph CLI
+    participant Recon as TargetScanner
+    participant Target as Target Web Application
+    participant Engine as Suggestion Engine
+
+    Operator->>Recon: scan(url, max_depth, timeout)
+    Recon->>Target: GET / (Collect Root Headers and Cookies)
+    Target-->>Recon: 200 OK (Headers, Cookies, HTML)
+    par Parallel Discovery Probing
+        Recon->>Target: HEAD /admin, /upload, /docs (20 threads)
+        Target-->>Recon: Status Codes (200, 403, 404)
+    and DOM HTML Scraping
+        Recon->>Recon: Parse multipart form tags
+        Recon->>Recon: Extract file inputs and accept attributes
+    end
+    Recon->>Recon: Score Evidence against 80+ Signatures
+    Recon->>Recon: Audit Missing Security Headers
+    Recon->>Engine: Feed Discovered Evidence Corpus
+    Engine-->>Operator: Structured Report and Recommendations
+</pre></div>
+
+<hr />
+<h2>3. Results &amp; Empirical Validation (R)</h2>
+<p>The framework was evaluated using the automated testing harness (<code>testbed/harness/run_tests.py</code>) across three isolated, intentionally vulnerable target architectures.</p>
+<div class="mermaid-wrap"><pre class="mermaid">
+flowchart TD
+    subgraph T1["Tier 1: Legacy LAMP Lab (Port 8081)"]
+        direction TB
+        T1_In["Upload: avatar.jpg<br/>(JPEG + PHP Inject)"] --> T1_Filt["PHP exif_imagetype() Check"]
+        T1_Filt -->|"Bypassed (0xFFD8FF Valid)"| T1_Store["Saved to uploads/avatar.jpg"]
+        T1_Store --> T1_LFI["Trigger: ?page=uploads/avatar.jpg&cmd=id"]
+        T1_LFI --> T1_Out["CRITICAL RCE CONFIRMED<br/>(uid=33 www-data)"]
+    end
+
+    subgraph T2["Tier 2: Modern MERN Lab (Port 3000/3001)"]
+        direction TB
+        T2_In1["Upload: avatar.png<br/>(PNG + HTML Inject)"] --> T2_Filt1["file-type library"]
+        T2_Filt1 -->|"Bypassed (image/png)"| T2_XSS["Browser Opens Image URL<br/>Server Dynamically Promotes MIME"]
+        T2_XSS --> T2_Alert["STORED XSS TRIGGERED"]
+
+        T2_In2["Upload: archive.png<br/>(PNG + ZIP Append)"] --> T2_Filt2["file-type library"]
+        T2_Filt2 -->|"Bypassed (image/png)"| T2_Worker["adm-zip Background Worker"]
+        T2_Worker --> T2_Slip["PARSER DIFFERENTIAL EXPLOITED<br/>(Payload extracted to backend/extracted/)"]
+    end
+
+    subgraph T3["Tier 3: Cloud-Native Lab (Port 8000/8080/9000)"]
+        direction TB
+        T3_Req["Request Presigned Token"] --> T3_API["FastAPI /get-upload-url"]
+        T3_API -->|"Returns Signed S3 URL"| T3_PUT["Client PUTs tier3_zipslip.png<br/>DIRECTLY to MinIO S3 (Port 9000)"]
+        T3_PUT --> T3_Bypass["PERIMETER VALIDATION BYPASSED<br/>(Backend never touches bytes)"]
+        T3_Bypass --> T3_Val["Backend /validate-upload Triggered"]
+        T3_Val --> T3_Diff["Dual Consumer Check:<br/>• python-magic: image/png (PASS)<br/>• zipfile: ZIP parsed (PASS)"]
+        T3_Diff --> T3_Extract["ZIP-SLIP EXTRACTED TO /tmp/polymorph_extracted"]
+    end
+
+    style T1 fill:#1c1917,stroke:#ea580c,color:#fff
+    style T2 fill:#18181b,stroke:#a855f7,color:#fff
+    style T3 fill:#0c4a6e,stroke:#0284c7,color:#fff
+</pre></div>
+
+<h3>3.1 Empirical Exploitation Matrix (100% Real Lab Data)</h3>
+<p>The automated harness produced the following verification record:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Testbed Tier</th>
+<th style="text-align: left;">Technology Stack</th>
+<th style="text-align: left;">Attack Vector Tested</th>
+<th style="text-align: left;">Mechanics</th>
+<th style="text-align: center;">Verification Result</th>
+<th style="text-align: center;">Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>Tier 1</strong></td>
+<td style="text-align: left;">Apache 2.4 + PHP 8.1</td>
+<td style="text-align: left;">JPEG+PHP Injection</td>
+<td style="text-align: left;">Header valid <code>exif_imagetype()</code>, PHP engine executes embedded <code>&lt;?php</code> tag</td>
+<td style="text-align: center;"><strong>BYPASS (Confirmed)</strong></td>
+<td style="text-align: center;"><strong>RCE</strong> (<code>uid=33(www-data)</code>)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Tier 2</strong></td>
+<td style="text-align: left;">Node.js 18 + Express</td>
+<td style="text-align: left;">PNG+HTML Injection</td>
+<td style="text-align: left;"><code>file-type</code> checks magic; missing nosniff promotes to HTML</td>
+<td style="text-align: center;"><strong>BYPASS (Confirmed)</strong></td>
+<td style="text-align: center;"><strong>Stored XSS</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Tier 2</strong></td>
+<td style="text-align: left;">Node.js 18 + Express</td>
+<td style="text-align: left;">PNG+ZIP Differential</td>
+<td style="text-align: left;">Image filter passes; <code>adm-zip</code> background worker extracts archive payload</td>
+<td style="text-align: center;"><strong>BYPASS (Confirmed)</strong></td>
+<td style="text-align: center;"><strong>Parser Differential / Zip-Slip</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Tier 3</strong></td>
+<td style="text-align: left;">FastAPI + MinIO S3</td>
+<td style="text-align: left;">Pre-signed URL Bypass</td>
+<td style="text-align: left;">Client requests signed URL; uploads direct to S3 bypassing FastAPI middleware</td>
+<td style="text-align: center;"><strong>BYPASS (Confirmed)</strong></td>
+<td style="text-align: center;"><strong>Perimeter Bypass</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>Tier 3</strong></td>
+<td style="text-align: left;">FastAPI + MinIO S3</td>
+<td style="text-align: left;">Parser Differential</td>
+<td style="text-align: left;"><code>python-magic</code> returns <code>image/png</code>; <code>zipfile.ZipFile</code> extracts <code>pwned_tier2.txt</code></td>
+<td style="text-align: center;"><strong>BYPASS (Confirmed)</strong></td>
+<td style="text-align: center;"><strong>Cloud Worker Compromise</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>Verified harness log:</em> <code>Total Tests: 5 | Bypassed: 5 | Blocked: 0 | Execution Time: 4.8s</code></p>
+<hr />
+<h2>4. Discussion: Honest Limitations, Drawbacks &amp; Future Work (D)</h2>
+<p>To maintain strict academic integrity, the fundamental boundaries and failure modes of polyglot synthesis must be explicitly stated.</p>
+<h3>4.1 Fundamental Limits &amp; Drawbacks</h3>
+<ol>
+<li><strong>The Mutual Prepend Constraint (Hard Boundary):</strong></li>
+<li>Two formats that <em>both</em> require their magic bytes to reside strictly at byte index 0 (offset 0) <strong>cannot</strong> be combined via append or prepend.</li>
+<li><em>Example:</em> A pure JPEG (<code>0xFFD8</code>) and a pure PNG (<code>0x89504E47</code>) cannot be merged by linear concatenation. One cannot prepend the other without corrupting the host's magic header.</li>
+<li><strong>Defeat via Re-Rasterization (Sanitization Vulnerability):</strong></li>
+<li>If a target server processes an uploaded image using an active image processing library that <strong>decodes the bitmap to raw pixel memory and re-encodes it</strong> (e.g., using <code>PIL.Image.open(f).save(out)</code>), <strong>all injected comments, metadata chunks, and EOF slack space are stripped completely</strong>.</li>
+<li>PolyMorph polyglots survive storage, caching, and transmission, but do <em>not</em> survive active re-compression/normalization pipelines.</li>
+<li><strong>MIME Sniffing Browser Dependencies:</strong></li>
+<li>PNG+HTML polyglots depend on either:
+     a) The server omitting <code>X-Content-Type-Options: nosniff</code>.
+     b) The server misclassifying the content type.</li>
+<li>If a modern browser receives <code>Content-Type: image/png</code> alongside <code>X-Content-Type-Options: nosniff</code>, it strictly invokes its native image decoding engine and will <strong>never</strong> execute the embedded JavaScript.</li>
+<li><strong>Length and Chunk Budget Limits:</strong></li>
+<li>JPEG <code>COM</code> markers have an absolute 16-bit payload length limit (<code class='math'>2^{16} - 1 = 65,535\text{ bytes}</code>). Payloads exceeding 64 KB cannot be injected into a single JPEG comment segment.</li>
+</ol>
+<hr />
+<h3>4.2 Comprehensive Project Roadmap</h3>
+<div class="mermaid-wrap"><pre class="mermaid">
+flowchart TD
+    subgraph PHASE1["PHASE 1: Core Synthesis Engine (COMPLETE ✅)"]
+        P1_1["Format Registry (9 Formats)"]
+        P1_2["Append & Inject Synthesis Engines"]
+        P1_3["Structural Validators (Pillow, PyPDF, zipfile)"]
+        P1_4["Rich CLI (build, info, formats, probe)"]
+    end
+
+    subgraph PHASE2["PHASE 2: Vulnerable Testbeds & Harness (COMPLETE ✅)"]
+        P2_1["Tier 1: Legacy LAMP Lab"]
+        P2_2["Tier 2: Modern MERN Lab"]
+        P2_3["Tier 3: Cloud-Native S3 / FastAPI Lab"]
+        P2_4["Automated Evaluation Harness (run_tests.py)"]
+    end
+
+    subgraph PHASE4["PHASE 4: General-Purpose Recon (COMPLETE ✅)"]
+        P4_1["Passive Web Scanner (target_scanner.py)"]
+        P4_2["80+ Tech Evidence Signatures"]
+        P4_3["Security Header & Gap Audit"]
+        P4_4["Automated Strategy Suggestion Engine"]
+    end
+
+    subgraph PHASE3["PHASE 3: Defensive Engine (NEXT IMMEDIATE STEP ⏳)"]
+        P3_1["Structural Anomaly Detector<br/>(Slack space & multi-magic detector)"]
+        P3_2["Normalizing Sanitizer<br/>(In-memory re-rasterization engine)"]
+        P3_3["Dual-Consumer Discrepancy Analyzer"]
+    end
+
+    subgraph PHASE5["PHASE 5: PolyMorph Studio Cyber Range (FINAL STAGE 🎯)"]
+        P5_1["Unified Cyber Range Web UI<br/>(FastAPI Backend + React Frontend)"]
+        P5_2["Tab 1: Target Recon & Polyglot Crafter"]
+        P5_3["Tab 2: Simulation Cyber Range & Live Firing"]
+        P5_4["Tab 3: Forensics & Defense Sandbox"]
+    end
+
+    PHASE1 --> PHASE2
+    PHASE2 --> PHASE4
+    PHASE4 --> PHASE3
+    PHASE3 --> PHASE5
+
+    style PHASE1 fill:#14532d,stroke:#22c55e,color:#fff
+    style PHASE2 fill:#14532d,stroke:#22c55e,color:#fff
+    style PHASE4 fill:#14532d,stroke:#22c55e,color:#fff
+    style PHASE3 fill:#713f12,stroke:#eab308,color:#fff
+    style PHASE5 fill:#1e1e24,stroke:#64748b,color:#fff
+</pre></div>
+
+<hr />
+<h2>5. Summary Guide for Project Review &amp; Viva</h2>
+<p>When presenting this work to your project guide or evaluation committee, structure your oral defense around these four key arguments:</p>
+<ol>
+<li><strong>The Scientific Problem:</strong> <em>“We are demonstrating that perimeter file validation using extensions and magic bytes is fundamentally broken because modern distributed architectures parse the exact same file using different consumer models.”</em></li>
+<li><strong>Our Innovation:</strong> <em>“Instead of crafting manual, fragile exploits, PolyMorph establishes formal parsing contracts for file formats, automates offset calculation and checksum preservation, and matches them to discovered vulnerabilities using our passive reconnaissance scanner.”</em></li>
+<li><strong>The Empirical Proof:</strong> <em>“We verified our synthesized polyglots across three independent, containerized testbed tiers (LAMP, MERN, and Cloud-Native S3), achieving a 100% bypass rate across all 5 distinct attack vectors.”</em></li>
+<li><strong>The Academic Honesty (Defense &amp; Limitations):</strong> <em>“Polyglots cannot defy physics—formats requiring offset-zero magic bytes cannot be prepended, and active bitmap re-rasterization completely destroys injected slack space. This exact limitation serves as the blueprint for our Phase 3 defensive engine.”</em></li>
+</ol>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'neutral',
+    securityLevel: 'loose',
+    flowchart: { useMaxWidth: true, htmlLabels: true },
+    sequence: { useMaxWidth: true }
+  });
+</script>
+</body>
+</html>

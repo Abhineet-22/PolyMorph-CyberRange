@@ -1,0 +1,300 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "Evidence-based technology fingerprinting signatures for PolyMorph recon module. These are purely observational patterns derived from public HTTP headers, cookie names, path conventions, and HTML markers. No target-specific or testbed-specific logic.",
+    "note": "Keys are technology labels; values are lists of evidence matchers. Matchers are scored — the scanner accumulates evidence and infers; it does NOT if/else on tier names."
+  },
+  "header_signatures": [
+    {"header": "server",           "pattern": "apache",      "tech": "Apache HTTP Server",       "category": "webserver", "weight": 3},
+    {"header": "server",           "pattern": "nginx",       "tech": "nginx",                    "category": "webserver", "weight": 3},
+    {"header": "server",           "pattern": "iis",         "tech": "Microsoft IIS",            "category": "webserver", "weight": 3},
+    {"header": "server",           "pattern": "lighttpd",    "tech": "lighttpd",                 "category": "webserver", "weight": 3},
+    {"header": "server",           "pattern": "caddy",       "tech": "Caddy",                    "category": "webserver", "weight": 3},
+    {"header": "server",           "pattern": "gunicorn",    "tech": "Gunicorn (Python WSGI)",   "category": "webserver", "weight": 3},
+    {"header": "server",           "pattern": "uvicorn",     "tech": "Uvicorn (Python ASGI)",    "category": "webserver", "weight": 3},
+    {"header": "server",           "pattern": "hypercorn",   "tech": "Hypercorn (Python ASGI)",  "category": "webserver", "weight": 3},
+    {"header": "server",           "pattern": "tornado",     "tech": "Tornado (Python)",         "category": "webserver", "weight": 3},
+    {"header": "server",           "pattern": "werkzeug",    "tech": "Werkzeug / Flask (Python)","category": "framework", "weight": 3},
+    {"header": "server",           "pattern": "express",     "tech": "Express.js (Node.js)",     "category": "framework", "weight": 3},
+    {"header": "server",           "pattern": "node",        "tech": "Node.js",                  "category": "runtime",   "weight": 2},
+    {"header": "server",           "pattern": "kestrel",     "tech": "Kestrel (.NET)",           "category": "webserver", "weight": 3},
+    {"header": "server",           "pattern": "jetty",       "tech": "Jetty (Java)",             "category": "webserver", "weight": 3},
+    {"header": "server",           "pattern": "tomcat",      "tech": "Apache Tomcat (Java)",     "category": "webserver", "weight": 3},
+    {"header": "server",           "pattern": "jboss",       "tech": "JBoss (Java)",             "category": "webserver", "weight": 3},
+    {"header": "server",           "pattern": "weblogic",    "tech": "Oracle WebLogic (Java)",   "category": "webserver", "weight": 3},
+    {"header": "server",           "pattern": "rails",       "tech": "Ruby on Rails",            "category": "framework", "weight": 3},
+    {"header": "server",           "pattern": "puma",        "tech": "Puma (Ruby)",              "category": "webserver", "weight": 3},
+    {"header": "server",           "pattern": "thin",        "tech": "Thin (Ruby)",              "category": "webserver", "weight": 3},
+    {"header": "server",           "pattern": "golang",      "tech": "Go (net/http)",            "category": "runtime",   "weight": 3},
+    {"header": "server",           "pattern": "openresty",   "tech": "OpenResty (nginx+Lua)",    "category": "webserver", "weight": 3},
+    {"header": "x-powered-by",     "pattern": "php",         "tech": "PHP",                      "category": "runtime",   "weight": 4},
+    {"header": "x-powered-by",     "pattern": "asp.net",     "tech": "ASP.NET",                  "category": "framework", "weight": 4},
+    {"header": "x-powered-by",     "pattern": "express",     "tech": "Express.js (Node.js)",     "category": "framework", "weight": 4},
+    {"header": "x-powered-by",     "pattern": "node.js",     "tech": "Node.js",                  "category": "runtime",   "weight": 4},
+    {"header": "x-powered-by",     "pattern": "next.js",     "tech": "Next.js (React SSR)",      "category": "framework", "weight": 4},
+    {"header": "x-powered-by",     "pattern": "nuxt",        "tech": "Nuxt.js (Vue SSR)",        "category": "framework", "weight": 4},
+    {"header": "x-powered-by",     "pattern": "django",      "tech": "Django (Python)",          "category": "framework", "weight": 4},
+    {"header": "x-powered-by",     "pattern": "flask",       "tech": "Flask (Python)",           "category": "framework", "weight": 4},
+    {"header": "x-powered-by",     "pattern": "fastapi",     "tech": "FastAPI (Python)",         "category": "framework", "weight": 4},
+    {"header": "x-powered-by",     "pattern": "rails",       "tech": "Ruby on Rails",            "category": "framework", "weight": 4},
+    {"header": "x-powered-by",     "pattern": "laravel",     "tech": "Laravel (PHP)",            "category": "framework", "weight": 4},
+    {"header": "x-powered-by",     "pattern": "symfony",     "tech": "Symfony (PHP)",            "category": "framework", "weight": 4},
+    {"header": "x-powered-by",     "pattern": "codeigniter", "tech": "CodeIgniter (PHP)",        "category": "framework", "weight": 4},
+    {"header": "x-generator",      "pattern": "drupal",      "tech": "Drupal (PHP CMS)",         "category": "cms",       "weight": 4},
+    {"header": "x-drupal-cache",   "pattern": "",            "tech": "Drupal (PHP CMS)",         "category": "cms",       "weight": 4},
+    {"header": "x-aspnet-version", "pattern": "",            "tech": "ASP.NET",                  "category": "framework", "weight": 4},
+    {"header": "x-aspnetmvc-version","pattern": "",          "tech": "ASP.NET MVC",              "category": "framework", "weight": 4},
+    {"header": "set-cookie",        "pattern": "phpsessid",  "tech": "PHP Session",              "category": "runtime",   "weight": 3},
+    {"header": "set-cookie",        "pattern": "jsessionid", "tech": "Java Servlet (Tomcat/JEE)","category": "runtime",   "weight": 3},
+    {"header": "set-cookie",        "pattern": "asp.net_sessionid","tech": "ASP.NET",            "category": "framework", "weight": 3},
+    {"header": "set-cookie",        "pattern": "rack.session","tech": "Rack (Ruby)",             "category": "framework", "weight": 3},
+    {"header": "set-cookie",        "pattern": "_rails_session","tech": "Ruby on Rails",         "category": "framework", "weight": 3},
+    {"header": "set-cookie",        "pattern": "django_session","tech": "Django (Python)",       "category": "framework", "weight": 3},
+    {"header": "set-cookie",        "pattern": "flask_session","tech": "Flask (Python)",         "category": "framework", "weight": 3},
+    {"header": "set-cookie",        "pattern": "laravel_session","tech": "Laravel (PHP)",        "category": "framework", "weight": 3},
+    {"header": "set-cookie",        "pattern": "wordpress_",  "tech": "WordPress (PHP CMS)",     "category": "cms",       "weight": 3},
+    {"header": "set-cookie",        "pattern": "wp-settings", "tech": "WordPress (PHP CMS)",     "category": "cms",       "weight": 3},
+    {"header": "set-cookie",        "pattern": "express:sess","tech": "Express.js Session",      "category": "framework", "weight": 3},
+    {"header": "x-frame-options",   "pattern": "",            "tech": "Clickjacking Protection", "category": "security_header_present", "weight": 1},
+    {"header": "x-content-type-options","pattern": "nosniff", "tech": "MIME-Sniff Protection",  "category": "security_header_present", "weight": 1},
+    {"header": "content-security-policy","pattern": "",       "tech": "CSP",                    "category": "security_header_present", "weight": 1},
+    {"header": "strict-transport-security","pattern": "",     "tech": "HSTS",                   "category": "security_header_present", "weight": 1},
+    {"header": "x-xss-protection",  "pattern": "",            "tech": "X-XSS-Protection",       "category": "security_header_present", "weight": 1}
+  ],
+  "path_signatures": [
+    {"pattern": "/wp-login",        "tech": "WordPress (PHP CMS)", "category": "cms",       "weight": 5},
+    {"pattern": "/wp-content",      "tech": "WordPress (PHP CMS)", "category": "cms",       "weight": 5},
+    {"pattern": "/wp-includes",     "tech": "WordPress (PHP CMS)", "category": "cms",       "weight": 5},
+    {"pattern": "/wp-admin",        "tech": "WordPress (PHP CMS)", "category": "cms",       "weight": 5},
+    {"pattern": "/?p=",            "tech": "WordPress (PHP CMS)",  "category": "cms",       "weight": 3},
+    {"pattern": "/administrator",   "tech": "Joomla (PHP CMS)",    "category": "cms",       "weight": 4},
+    {"pattern": "/components/com_", "tech": "Joomla (PHP CMS)",    "category": "cms",       "weight": 5},
+    {"pattern": "/sites/default",   "tech": "Drupal (PHP CMS)",    "category": "cms",       "weight": 5},
+    {"pattern": "/misc/drupal.js",  "tech": "Drupal (PHP CMS)",    "category": "cms",       "weight": 5},
+    {"pattern": "/static/",         "tech": "Django/Flask Static",  "category": "runtime",   "weight": 1},
+    {"pattern": "/media/",          "tech": "Django Media",         "category": "runtime",   "weight": 1},
+    {"pattern": "/__pycache__",     "tech": "Python (exposed)",     "category": "runtime",   "weight": 2},
+    {"pattern": "/phpinfo",         "tech": "PHP",                  "category": "runtime",   "weight": 5},
+    {"pattern": "/.php",            "tech": "PHP",                  "category": "runtime",   "weight": 4},
+    {"pattern": "/.aspx",           "tech": "ASP.NET",              "category": "framework", "weight": 4},
+    {"pattern": "/.asp",            "tech": "ASP/ASP.NET",          "category": "framework", "weight": 4},
+    {"pattern": "/.jsp",            "tech": "Java Servlet (JSP)",   "category": "runtime",   "weight": 4},
+    {"pattern": "/.do",             "tech": "Java/Struts",          "category": "framework", "weight": 3},
+    {"pattern": "/.action",         "tech": "Java/Struts",          "category": "framework", "weight": 3},
+    {"pattern": "/.rb",             "tech": "Ruby",                 "category": "runtime",   "weight": 4},
+    {"pattern": "/api/v",           "tech": "REST API",             "category": "api",       "weight": 2},
+    {"pattern": "/graphql",         "tech": "GraphQL API",          "category": "api",       "weight": 4},
+    {"pattern": "/swagger",         "tech": "OpenAPI/Swagger",      "category": "api",       "weight": 3},
+    {"pattern": "/openapi",         "tech": "OpenAPI/Swagger",      "category": "api",       "weight": 3},
+    {"pattern": "/docs",            "tech": "API Docs (FastAPI/etc.)","category": "api",     "weight": 2},
+    {"pattern": "/redoc",           "tech": "ReDoc (FastAPI)",      "category": "api",       "weight": 3},
+    {"pattern": "/actuator",        "tech": "Spring Boot Actuator", "category": "framework", "weight": 5},
+    {"pattern": "/.git",            "tech": "Exposed .git",         "category": "exposure",  "weight": 5},
+    {"pattern": "/.env",            "tech": "Exposed .env",         "category": "exposure",  "weight": 5},
+    {"pattern": "/phpMyAdmin",      "tech": "phpMyAdmin",           "category": "exposure",  "weight": 5},
+    {"pattern": "/adminer",         "tech": "Adminer (DB UI)",      "category": "exposure",  "weight": 5},
+    {"pattern": "/debug",           "tech": "Debug Endpoint",       "category": "exposure",  "weight": 4},
+    {"pattern": "/_debug_toolbar",  "tech": "Django Debug Toolbar", "category": "exposure",  "weight": 5},
+    {"pattern": "/console",         "tech": "Werkzeug Console (Python)","category": "exposure","weight": 5},
+    {"pattern": "/upload",          "tech": "File Upload Endpoint", "category": "upload",    "weight": 4},
+    {"pattern": "/uploads",         "tech": "Upload Storage Dir",   "category": "upload",    "weight": 4},
+    {"pattern": "/files",           "tech": "File Endpoint",        "category": "upload",    "weight": 3},
+    {"pattern": "/media/upload",    "tech": "Media Upload",         "category": "upload",    "weight": 4}
+  ],
+  "html_signatures": [
+    {"pattern": "wp-content",          "tech": "WordPress (PHP CMS)",   "category": "cms",       "weight": 4},
+    {"pattern": "generator.*wordpress","tech": "WordPress (PHP CMS)",   "category": "cms",       "weight": 5},
+    {"pattern": "generator.*joomla",   "tech": "Joomla (PHP CMS)",      "category": "cms",       "weight": 5},
+    {"pattern": "generator.*drupal",   "tech": "Drupal (PHP CMS)",      "category": "cms",       "weight": 5},
+    {"pattern": "data-reactroot",      "tech": "React",                 "category": "frontend",  "weight": 4},
+    {"pattern": "data-react-helmet",   "tech": "React",                 "category": "frontend",  "weight": 3},
+    {"pattern": "__next_data__",       "tech": "Next.js (React SSR)",   "category": "frontend",  "weight": 5},
+    {"pattern": "__nuxt",              "tech": "Nuxt.js (Vue SSR)",     "category": "frontend",  "weight": 5},
+    {"pattern": "ng-version",          "tech": "Angular",               "category": "frontend",  "weight": 4},
+    {"pattern": "ng-app",              "tech": "AngularJS",             "category": "frontend",  "weight": 3},
+    {"pattern": "data-vue",            "tech": "Vue.js",                "category": "frontend",  "weight": 4},
+    {"pattern": "svelte",              "tech": "Svelte",                "category": "frontend",  "weight": 3},
+    {"pattern": "ember.js",            "tech": "Ember.js",              "category": "frontend",  "weight": 3},
+    {"pattern": "backbone.js",         "tech": "Backbone.js",           "category": "frontend",  "weight": 3},
+    {"pattern": "jquery.min.js",       "tech": "jQuery",                "category": "frontend",  "weight": 2},
+    {"pattern": "bootstrap.min",       "tech": "Bootstrap CSS",         "category": "frontend",  "weight": 1},
+    {"pattern": "laravel",             "tech": "Laravel (PHP)",         "category": "framework", "weight": 2},
+    {"pattern": "csrf_token",          "tech": "CSRF Token (various)",  "category": "security",  "weight": 1},
+    {"pattern": "graphql",             "tech": "GraphQL",               "category": "api",       "weight": 3},
+    {"pattern": "socket.io",           "tech": "Socket.IO (Node.js)",   "category": "framework", "weight": 3},
+    {"pattern": "inertia",             "tech": "InertiaJS (Laravel/Rails)","category": "framework","weight": 3}
+  ],
+  "js_path_signatures": [
+    {"pattern": "/_next/static",   "tech": "Next.js (React SSR)",   "category": "frontend",  "weight": 5},
+    {"pattern": "/static/js/main", "tech": "Create React App",      "category": "frontend",  "weight": 4},
+    {"pattern": "/assets/index",   "tech": "Vite (JS bundler)",     "category": "frontend",  "weight": 4},
+    {"pattern": "chunk-",          "tech": "Webpack (JS bundler)",  "category": "frontend",  "weight": 2},
+    {"pattern": "bundle.js",       "tech": "Webpack/Bundler",       "category": "frontend",  "weight": 2},
+    {"pattern": "runtime.js",      "tech": "Angular/Webpack",       "category": "frontend",  "weight": 2},
+    {"pattern": "polyfills.js",    "tech": "Angular",               "category": "frontend",  "weight": 3},
+    {"pattern": "vendor.js",       "tech": "Webpack (JS bundler)",  "category": "frontend",  "weight": 2},
+    {"pattern": "app.js",          "tech": "Generic SPA",           "category": "frontend",  "weight": 1},
+    {"pattern": "socket.io.js",    "tech": "Socket.IO (Node.js)",   "category": "framework", "weight": 4},
+    {"pattern": "htmx",            "tech": "HTMX",                  "category": "frontend",  "weight": 4}
+  ],
+  "security_checks": [
+    {"header": "x-content-type-options", "expected": "nosniff",    "gap": "MIME-sniff protection absent — browser may interpret polyglot responses as HTML/JS"},
+    {"header": "content-security-policy","expected": "any",         "gap": "No CSP — script injection attacks may succeed"},
+    {"header": "x-frame-options",        "expected": "any",         "gap": "No clickjacking protection"},
+    {"header": "strict-transport-security","expected": "any",       "gap": "No HSTS — downgrade attacks possible"},
+    {"header": "x-xss-protection",       "expected": "any",         "gap": "No legacy XSS filter header (informational)"},
+    {"header": "referrer-policy",        "expected": "any",         "gap": "No Referrer-Policy — referrer leakage possible"},
+    {"header": "permissions-policy",     "expected": "any",         "gap": "No Permissions-Policy — browser feature access unrestricted"}
+  ],
+  "polyglot_strategy_map": {
+    "PHP": {
+      "strategy": "inject",
+      "host_formats": ["jpeg", "png", "gif", "pdf", "zip"],
+      "payload_format": "php",
+      "payload_note": "PHP execution via <?php tag anywhere in file body. Upload restrictions typically check extension or MIME but not body content.",
+      "risk": "RCE"
+    },
+    "ASP.NET": {
+      "strategy": "inject",
+      "host_formats": ["jpeg", "png"],
+      "payload_format": "html",
+      "payload_note": "ASPX server-side code can be injected if server misconfigures content-type handling.",
+      "risk": "RCE"
+    },
+    "Java Servlet (JSP)": {
+      "strategy": "inject",
+      "host_formats": ["zip"],
+      "payload_format": "zip",
+      "payload_note": "ZIP slip and WAR-based attacks are primary vectors for Java servers.",
+      "risk": "RCE / Path Traversal"
+    },
+    "Node.js": {
+      "strategy": "inject",
+      "host_formats": ["png", "jpeg"],
+      "payload_format": "html",
+      "payload_note": "Without X-Content-Type-Options: nosniff, HTML/JS payload in image file can execute in browser if served with wrong MIME.",
+      "risk": "XSS / SSRF"
+    },
+    "Express.js (Node.js)": {
+      "strategy": "inject",
+      "host_formats": ["png", "jpeg"],
+      "payload_format": "html",
+      "payload_note": "MIME promotion attack if server lacks nosniff. HTML injected into PNG triggers XSS when served without Content-Type guard.",
+      "risk": "XSS"
+    },
+    "Django (Python)": {
+      "strategy": "inject",
+      "host_formats": ["jpeg", "png", "pdf"],
+      "payload_format": "html",
+      "payload_note": "Django ImageField doesn't strip ICC or comment sections — JPEG comment injection persists post-save.",
+      "risk": "XSS / Stored injection"
+    },
+    "Flask (Python)": {
+      "strategy": "append",
+      "host_formats": ["zip", "png", "pdf"],
+      "payload_format": "zip",
+      "payload_note": "Flask send_file often does not revalidate content — ZIP appended after PNG passes image check but can be extracted by client.",
+      "risk": "Parser differential / SSRF"
+    },
+    "FastAPI (Python)": {
+      "strategy": "append",
+      "host_formats": ["zip", "pdf"],
+      "payload_format": "zip",
+      "payload_note": "FastAPI async file serving with S3 presigned URLs may skip server-side content validation — ZIP append exploits parser differential.",
+      "risk": "Parser differential"
+    },
+    "Ruby on Rails": {
+      "strategy": "inject",
+      "host_formats": ["jpeg", "png"],
+      "payload_format": "html",
+      "payload_note": "Active Storage may serve files with original MIME — injection in comment/EXIF section can survive MiniMagick strip in misconfigured setups.",
+      "risk": "XSS / Stored injection"
+    },
+    "No CSP": {
+      "strategy": "inject",
+      "host_formats": ["html", "png", "jpeg"],
+      "payload_format": "html",
+      "payload_note": "Absence of Content-Security-Policy means injected scripts execute freely — HTML polyglots are maximally dangerous.",
+      "risk": "XSS"
+    },
+    "MIME-sniff protection absent — browser may interpret polyglot responses as HTML/JS": {
+      "strategy": "inject",
+      "host_formats": ["png", "jpeg", "gif"],
+      "payload_format": "html",
+      "payload_note": "Without nosniff, browser MIME-sniffs — image served without Content-Type: image/* can execute embedded HTML/JS.",
+      "risk": "XSS"
+    },
+    "Archive worker detected": {
+      "strategy": "append",
+      "host_formats": ["jpeg", "png", "gif"],
+      "payload_format": "zip",
+      "payload_note": "Server-side archive extraction worker processes upload — ZIP appended after image header passes image check but worker extracts payload.",
+      "risk": "ZIP slip / path traversal / RCE"
+    }
+  },
+  "surface_strategy_map": {
+    "svg_serving": {
+      "strategy": "inject",
+      "host_formats": ["svg"],
+      "payload_format": "html",
+      "payload_note": "SVG content detected on target. SVG is an XML DOM format with native W3C <script> support. Unlike binary rasters (PNG/JPEG), SVG bypasses magic-byte upload filters. When served without CSP (script-src 'none') or origin sandboxing, embedded <script> or onload= handlers execute in the full serving origin via <object>/<embed>/<iframe> browsing contexts.",
+      "risk": "Stored XSS / DOM Origin Execution (SVG W3C Native Scripting)"
+    },
+    "media_serving": {
+      "strategy": "inject",
+      "host_formats": ["png", "jpeg", "gif"],
+      "payload_format": "html",
+      "payload_note": "Same-origin media served without nosniff — a polyglot PNG/JPEG+HTML injected into the image byte stream will be MIME-sniffed and rendered as HTML by the browser, executing embedded scripts within the site's origin.",
+      "risk": "XSS / MIME confusion"
+    },
+    "doc_processing": {
+      "strategy": "append",
+      "host_formats": ["pdf", "zip"],
+      "payload_format": "zip",
+      "payload_note": "Document processing pipeline detected (PDF/DOCX parser). A polyglot PDF+GZIP embeds a pickled payload in the GZIP FCOMMENT field — the same file is simultaneously a valid PDF and a .pickle.gz payload (CVE-2025-64512 pattern). No upload form required; any document ingestion path is a vector.",
+      "risk": "RCE / Parser differential (CVE-2025-64512 class)"
+    },
+    "content_embed": {
+      "strategy": "inject",
+      "host_formats": ["html", "pdf", "jpeg"],
+      "payload_format": "html",
+      "payload_note": "Same-origin <iframe>/<object>/<embed> content loading detected without sandbox attribute. A polyglot PDF+HTML or JPEG+HTML file embedded via these tags executes its HTML payload within the parent page origin, bypassing same-origin restrictions.",
+      "risk": "XSS / Same-origin bypass"
+    },
+    "api_ingestion": {
+      "strategy": "inject",
+      "host_formats": ["jpeg", "png", "pdf"],
+      "payload_format": "html",
+      "payload_note": "API endpoint accepts binary or multipart data. API-layer file ingestion typically skips server-side MIME validation applied at the HTML form layer — polyglot payloads submitted as raw binary (base64, ArrayBuffer, FormData) bypass content-type checks and reach backend parsers unvalidated.",
+      "risk": "Parser differential / RCE / XSS"
+    },
+    "cloud_storage": {
+      "strategy": "append",
+      "host_formats": ["jpeg", "png", "zip", "pdf"],
+      "payload_format": "zip",
+      "payload_note": "Cloud storage (S3/GCS/Azure Blob/CDN) referenced. Cloud object stores preserve file bytes verbatim with no server-side content re-validation. A polyglot uploaded to the bucket is served as-is — if no Content-Disposition: attachment or Content-Type enforcement exists, the browser renders the payload within the CDN origin.",
+      "risk": "Parser differential / MIME confusion / CDN supply chain"
+    },
+    "download_serve": {
+      "strategy": "inject",
+      "host_formats": ["jpeg", "png", "pdf"],
+      "payload_format": "html",
+      "payload_note": "File download/serve endpoint detected without Content-Disposition: attachment. Without forcing browser download, a polyglot JPEG+HTML or PNG+HTML served from /download or /files is rendered inline — the HTML payload executes within the site's origin.",
+      "risk": "XSS / Inline execution"
+    },
+    "param_reflection": {
+      "strategy": "inject",
+      "host_formats": ["png", "jpeg", "pdf"],
+      "payload_format": "html",
+      "payload_note": "Client-side parameter reflection detected — JavaScript parses URL query parameters (e.g. ?preview= or ?view=) and dynamically embeds media/documents via DOM sinks (<object>, <embed>, <iframe>). When served without nosniff or CSP, a reflected polyglot URL triggers browser MIME sniffing and executes arbitrary JavaScript in the application's origin.",
+      "risk": "DOM-Based MIME Confusion / XSS"
+    },
+    "svg_upload": {
+      "strategy": "inject",
+      "host_formats": ["svg"],
+      "payload_format": "html",
+      "payload_note": "SVG upload endpoint detected. SVG is an XML-based vector format that natively supports <script> elements and event-handler attributes (onload, onerror) per the W3C SVG specification. Unlike PNG/JPEG, SVG has no binary magic bytes — it starts with XML text and trivially bypasses binary magic-byte upload filters. When a user-uploaded SVG is served via <object>, <embed>, <iframe>, or direct URL navigation without CSP, embedded scripts execute in the full origin (Stored XSS). DOM execution is suppressed ONLY in <img> context.",
+      "risk": "Stored XSS / DOM Origin Execution (SVG W3C Native Scripting)"
+    }
+  }
+}

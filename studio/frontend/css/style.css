@@ -1,0 +1,559 @@
+/* ==========================================================================
+   PolyMorph Studio — Technical Workbench & Cyber Range Stylesheet
+   Design Philosophy: Flat, high-contrast, technical instrument aesthetic
+   Optimized for readability, data density, and clear visual hierarchy.
+   ========================================================================== */
+
+:root {
+  /* Surface colors */
+  --bg-app: #0c1017;
+  --bg-navbar: #121822;
+  --bg-card: #151d28;
+  --bg-card-header: #1a2332;
+  --bg-elevated: #1e293b;
+  --bg-input: #101621;
+  --bg-code: #070a0f;
+
+  /* Borders */
+  --border-subtle: #242f40;
+  --border-main: #334155;
+  --border-strong: #475569;
+  --border-focus: #38bdf8;
+
+  /* Typography Colors (Strictly High Contrast) */
+  --text-primary: #f8fafc;     /* 100% white-slate */
+  --text-secondary: #cbd5e1;   /* 80% light silver slate - fully readable */
+  --text-tertiary: #94a3b8;    /* 60% medium slate for subtle markers */
+  --text-bright: #ffffff;
+
+  /* Technical Accents */
+  --tech-cyan: #38bdf8;
+  --tech-blue: #60a5fa;
+  --tech-green: #34d399;
+  --tech-amber: #fbbf24;
+  --tech-red: #f87171;
+  --tech-purple: #c084fc;
+}
+
+/* Global Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography Overrides for Visibility */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-bright);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Force all muted/secondary text to remain highly visible */
+.text-muted,
+small.text-muted,
+span.text-muted,
+p.text-muted,
+div.text-muted,
+label.text-muted {
+  color: var(--text-secondary) !important;
+}
+
+.text-secondary {
+  color: var(--text-tertiary) !important;
+}
+
+/* Top Navigation Bar */
+.studio-navbar {
+  background-color: var(--bg-navbar);
+  border-bottom: 1px solid var(--border-main);
+  padding: 10px 24px;
+}
+
+.brand-badge {
+  background-color: #1e293b;
+  border: 1px solid #475569;
+  color: var(--tech-cyan);
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 3px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Navigation Tabs (Technical Flat Style) */
+.nav-tabs {
+  border-bottom: 1px solid var(--border-main);
+  gap: 4px;
+}
+
+.nav-tabs .nav-link {
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+  font-family: 'Consolas', 'Segoe UI', monospace;
+  font-weight: 600;
+  font-size: 0.88rem;
+  padding: 9px 18px;
+  background-color: transparent;
+  transition: all 0.15s ease-in-out;
+  letter-spacing: 0.02em;
+}
+
+.nav-tabs .nav-link:hover {
+  color: var(--text-bright);
+  background-color: var(--bg-card-header);
+  border-color: var(--border-subtle) var(--border-subtle) transparent;
+}
+
+.nav-tabs .nav-link.active {
+  color: var(--tech-cyan);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-main);
+  border-bottom: 2px solid var(--bg-card);
+  border-top: 2px solid var(--tech-cyan);
+}
+
+/* Technical Cards & Panels */
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-main);
+  border-radius: 4px;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.card-header {
+  background-color: var(--bg-card-header);
+  border-bottom: 1px solid var(--border-main);
+  color: var(--text-bright);
+  font-family: 'Consolas', 'Segoe UI', monospace;
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 9px 16px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.card-body {
+  padding: 16px;
+}
+
+/* Technical Inner Box */
+.tech-box {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-main);
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.tech-box-subtle {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 10px;
+}
+
+/* Metric Summary Tiles */
+.tech-metric-card {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-main);
+  border-radius: 4px;
+  padding: 12px 14px;
+}
+
+.tech-metric-label {
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.tech-metric-value {
+  color: var(--text-bright);
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-family: 'Consolas', monospace;
+}
+
+/* Form Controls & Inputs */
+.form-label, label {
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
+}
+
+.form-control, .form-select {
+  background-color: var(--bg-input) !important;
+  border: 1px solid var(--border-main) !important;
+  color: var(--text-primary) !important;
+  font-size: 0.88rem;
+  border-radius: 3px;
+  padding: 7px 12px;
+}
+
+.form-control:focus, .form-select:focus {
+  background-color: var(--bg-input) !important;
+  border-color: var(--border-focus) !important;
+  box-shadow: 0 0 0 1px var(--border-focus) !important;
+  color: var(--text-bright) !important;
+}
+
+.form-control::placeholder {
+  color: var(--text-tertiary) !important;
+}
+
+.form-text {
+  color: var(--text-secondary) !important;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+/* Buttons (Technical Flat) */
+.btn {
+  font-size: 0.86rem;
+  font-weight: 600;
+  border-radius: 3px;
+  padding: 6px 14px;
+  letter-spacing: 0.02em;
+}
+
+.btn-primary {
+  background-color: #0284c7;
+  border-color: #0369a1;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: #0369a1;
+  border-color: #075985;
+}
+
+.btn-danger {
+  background-color: #b91c1c;
+  border-color: #991b1b;
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background-color: #991b1b;
+  border-color: #7f1d1d;
+}
+
+.btn-warning {
+  background-color: #d97706;
+  border-color: #b45309;
+  color: #000000;
+  font-weight: 700;
+}
+
+.btn-warning:hover {
+  background-color: #b45309;
+  border-color: #92400e;
+  color: #ffffff;
+}
+
+.btn-outline-secondary {
+  border-color: var(--border-strong);
+  color: var(--text-secondary);
+  background-color: var(--bg-input);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--bg-elevated);
+  border-color: var(--text-secondary);
+  color: var(--text-bright);
+}
+
+.btn-outline-info {
+  border-color: var(--tech-cyan);
+  color: var(--tech-cyan);
+  background-color: transparent;
+}
+
+.btn-outline-info:hover {
+  background-color: rgba(56, 189, 248, 0.15);
+  color: #ffffff;
+  border-color: var(--tech-cyan);
+}
+
+.btn-outline-warning {
+  border-color: var(--tech-amber);
+  color: var(--tech-amber);
+  background-color: transparent;
+}
+
+.btn-outline-warning:hover {
+  background-color: rgba(251, 191, 36, 0.15);
+  color: #ffffff;
+}
+
+.btn-outline-cyan {
+  border-color: var(--tech-cyan);
+  color: var(--tech-cyan);
+  background-color: transparent;
+}
+
+.btn-outline-cyan:hover {
+  background-color: rgba(34, 211, 238, 0.15);
+  color: #ffffff;
+}
+
+/* Tables (Technical Clean Grid) */
+.table {
+  --bs-table-bg: var(--bg-card) !important;
+  --bs-table-color: var(--text-primary) !important;
+  --bs-table-border-color: var(--border-subtle) !important;
+  --bs-table-hover-bg: #1e293b !important;
+  --bs-table-hover-color: #ffffff !important;
+  background-color: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-subtle) !important;
+  margin-bottom: 0;
+}
+
+.table > :not(caption) > * > * {
+  background-color: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  box-shadow: none !important;
+}
+
+.table th {
+  background-color: var(--bg-card-header) !important;
+  color: var(--text-secondary) !important;
+  font-family: 'Consolas', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-main) !important;
+  padding: 10px 14px;
+}
+
+.table td {
+  background-color: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  padding: 10px 14px;
+  vertical-align: middle;
+  font-size: 0.86rem;
+}
+
+.table-hover tbody tr:hover > * {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+}
+
+/* Dedicated Security Gaps Table Styling */
+.table-gaps {
+  background-color: #121822 !important;
+}
+
+.table-gaps > :not(caption) > * > * {
+  background-color: #121822 !important;
+}
+
+.table-gaps tbody tr:nth-child(even) > * {
+  background-color: #161e2b !important;
+}
+
+.table-gaps tbody tr:hover > * {
+  background-color: #1e293b !important;
+}
+
+.table-gaps td code {
+  font-size: 0.88rem;
+  background-color: rgba(56, 189, 248, 0.12);
+  color: var(--tech-cyan);
+  padding: 2px 6px;
+  border-radius: 3px;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+/* Technical Badges (Square & Monospace) */
+.badge {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-weight: 600;
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+  padding: 3px 7px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.badge-tech {
+  background-color: rgba(56, 189, 248, 0.12);
+  border: 1px solid #0284c7;
+  color: var(--tech-cyan);
+}
+
+.badge-risk-rce {
+  background-color: rgba(248, 113, 113, 0.15);
+  border: 1px solid #dc2626;
+  color: #fca5a5;
+  font-weight: 700;
+}
+
+.badge-risk-xss {
+  background-color: rgba(251, 191, 36, 0.15);
+  border: 1px solid #d97706;
+  color: #fde68a;
+  font-weight: 700;
+}
+
+.badge-risk-diff {
+  background-color: rgba(192, 132, 252, 0.15);
+  border: 1px solid #9333ea;
+  color: #e9d5ff;
+  font-weight: 700;
+}
+
+.badge-success, .bg-success {
+  background-color: #065f46 !important;
+  border: 1px solid #10b981;
+  color: #a7f3d0 !important;
+}
+
+.badge-danger, .bg-danger {
+  background-color: #7f1d1d !important;
+  border: 1px solid #ef4444;
+  color: #fecaca !important;
+}
+
+.badge-warning, .bg-warning {
+  background-color: #78350f !important;
+  border: 1px solid #f59e0b;
+  color: #fef3c7 !important;
+}
+
+.badge-secondary, .bg-secondary {
+  background-color: #334155 !important;
+  border: 1px solid #475569;
+  color: #e2e8f0 !important;
+}
+
+/* Status Indicators (Plain & Technical) */
+.status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.status-online {
+  background-color: var(--tech-green);
+}
+
+.status-offline {
+  background-color: var(--tech-red);
+}
+
+/* Pre & Code Containers (Technical Terminal Look) */
+pre {
+  background-color: var(--bg-code);
+  border: 1px solid var(--border-main);
+  border-radius: 3px;
+  padding: 10px 14px;
+  font-family: 'Consolas', 'Cascadia Code', 'Courier New', monospace;
+  font-size: 0.82rem;
+  color: #7dd3fc;
+  line-height: 1.45;
+  overflow-x: auto;
+  margin-bottom: 0;
+}
+
+code {
+  font-family: 'Consolas', 'Courier New', monospace;
+  color: var(--tech-cyan);
+  background-color: rgba(56, 189, 248, 0.1);
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-size: 0.85em;
+}
+
+/* Scrollbar (Technical Clean) */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-app);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-main);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+/* Recon Loading Animation & Technical Telemetry Buffer */
+.recon-scan-bar-container {
+  height: 6px;
+  background-color: var(--bg-code);
+  border: 1px solid var(--border-main);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.recon-scan-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, var(--tech-cyan), transparent);
+  animation: reconScanMove 1.4s ease-in-out infinite;
+}
+
+@keyframes reconScanMove {
+  0% { left: -40%; }
+  100% { left: 100%; }
+}
+
+.recon-terminal-log {
+  background-color: var(--bg-code);
+  border: 1px solid var(--border-main);
+  border-radius: 3px;
+  padding: 12px 14px;
+  height: 155px;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.recon-log-line {
+  font-family: 'Consolas', 'Cascadia Code', monospace;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  opacity: 0;
+  animation: reconLineFadeIn 0.25s forwards;
+}
+
+@keyframes reconLineFadeIn {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}

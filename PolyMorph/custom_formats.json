@@ -1,0 +1,40 @@
+{
+  "elf": {
+    "name": "elf",
+    "extensions": [
+      ".elf"
+    ],
+    "mime_types": [
+      "application/x-executable"
+    ],
+    "magic_bytes": [
+      "7f454c46"
+    ],
+    "magic_offset": 0,
+    "category": "",
+    "append_tolerant": true,
+    "prepend_tolerant": true,
+    "max_prepend_bytes": -1,
+    "eof_markers": [],
+    "scans_from_end": false,
+    "requires_offset_patch": false,
+    "has_internal_checksum": false,
+    "checksum_covers_append": false,
+    "has_comment_field": false,
+    "comment_max_bytes": 0,
+    "has_metadata_block": false,
+    "injection_offsets": [],
+    "is_container": false,
+    "viable_as_host": true,
+    "viable_as_payload": true,
+    "typical_entropy_range": [
+      0.0,
+      8.0
+    ],
+    "probe_verified": true,
+    "parser_notes": null,
+    "known_polyglot_uses": [],
+    "validator": "",
+    "notes": ""
+  }
+}

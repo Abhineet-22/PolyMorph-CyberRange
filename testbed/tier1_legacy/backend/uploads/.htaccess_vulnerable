@@ -1,0 +1,12 @@
+# VULNERABLE CONFIG (copy this to .htaccess to enable PHP execution on jpg/png)
+# Attack Vector 2 — Apache AddType handler misconfiguration
+#
+# When this file is renamed to .htaccess inside the uploads/ directory,
+# Apache will instruct mod_php to process ALL .jpg/.png/.gif files as PHP.
+# Any uploaded JPEG that contains <?php ... ?> code will then be executed
+# directly when requested via HTTP (no LFI needed).
+#
+# Real-world analogue: shared-hosting environments where .htaccess overrides
+# are allowed inside user-writable upload directories.
+
+AddType application/x-httpd-php .jpg .png .gif

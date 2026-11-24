@@ -1,0 +1,32 @@
+services:
+  minio:
+    build: ./minio
+    ports:
+      - "9000:9000"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:9000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  tier3-api:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      minio:
+        condition: service_healthy
+    environment:
+      MINIO_ENDPOINT: http://minio:9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+
+  tier3-frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+
+volumes:
+  minio_data:

@@ -1,0 +1,14 @@
+# PolyMorph Security Research — Tier 1 Legacy PHP Testbed
+# INTENTIONALLY VULNERABLE — LOCAL LAB USE ONLY
+
+services:
+  tier1-php:
+    build: ./backend
+    container_name: polymorph_tier1_php
+    ports:
+      - "8081:80"
+    volumes:
+      - ./backend:/var/www/html
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html
+    restart: "no"

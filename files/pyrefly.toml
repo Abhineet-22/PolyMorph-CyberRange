@@ -1,0 +1,9 @@
+project-includes = [
+    "**/*.py*",
+    "**/*.ipynb",
+    "**/*.json",
+    "**/*.xml",
+    "**/*.yml",
+    "**/*.yaml",
+    "**/*.pdf",
+]

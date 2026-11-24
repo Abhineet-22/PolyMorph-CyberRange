@@ -1,0 +1,5 @@
+# Normal uploads/.htaccess — no special handler directives
+# PHP execution is NOT enabled here by default.
+# To enable Vector 2 attack, copy .htaccess_vulnerable over this file.
+
+Options -Indexes
